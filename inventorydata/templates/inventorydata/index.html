@@ -1,0 +1,44 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'inventorydata/style.css' %}" />
+<header>
+    <h1 class="vttext">VT Office of New Student Programs</h1>
+</header>
+{% if items_alphabetically %}
+    <h1>Inventory for Office of New Student Programs</h1>
+    <p>*Click Item Name for Checkout History and Availability*</p>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Location At Site</th>
+            <th>Site</th>
+            <th>Tech Classification</th>
+            <th>Checkoutable?</th>
+        </tr>
+        {% for item in items_alphabetically %}
+            <tr>
+                {% if item.checkoutable %}
+                    <td><a href="{% url 'inventorydata:checkouts' item.id %}">{{item.item_text}}</a></td>
+                {% else %}
+                    <td>{{item.item_text}}</td>
+                {% endif %}
+                <td>{{item.description}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.relative_location}}</td>
+                <td>{{item.site}}</td>
+                <td>{{item.tech_classification}}</td>
+                <td>{{item.checkoutable}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <div>No items in database.</div>
+    {% endif %}
+
+    <form action="{% url 'inventorydata:item' %}" id="newItem">
+        <input type="submit" value="Add New Item" class="submit"/>
+    </form>
+
+<footer></footer>

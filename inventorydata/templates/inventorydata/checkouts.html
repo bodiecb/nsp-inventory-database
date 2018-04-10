@@ -1,0 +1,45 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'inventorydata/style.css' %}" />
+<header>
+    <h1 class="vttext">VT Office of New Student Programs</h1>
+</header>
+
+<form action="{% url 'inventorydata:index' %}" class="back-button">
+    <input type="submit" value="Back to Inventory" class="submit"/>
+</form>
+
+<h1>Checkout History for {{ item.item_text }}</h1>
+
+{% if error_message %}<div><strong>{{ error_message }}</strong></div>{% endif %}
+
+        {% if item.checkoutable %}
+        <form action="{% url 'inventorydata:checkin' item.id %}" method="post"></form>
+            <table>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Checkout Date</th>
+                    <th>Return Date</th>
+                </tr>
+                {% for checkout in item.checkout_set.all %}
+                    <tr>
+                        <td>{{checkout.first_name}}</td>
+                        <td>{{checkout.last_name}}</td>
+                        <td>{{checkout.checkout_date}}</td>
+                        <td>{{checkout.return_date}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        <form action="{% url 'inventorydata:checkin' item.id %}">
+            <input type="submit" value="Check In" class="submit checkinButton"/>
+        </form>
+
+        <form action="{% url 'inventorydata:checkout' item.id %}">
+            <input type="submit" value="Check Out" class="submit checkoutButton"/>
+        </form>
+
+        {% else %}
+        <div>Item not able to be checked out.</div>
+        {% endif %}  
+<footer></footer>

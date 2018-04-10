@@ -1,0 +1,15 @@
+{% load static %}
+
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'inventorydata/style.css' %}" />
+<header>
+    <h1 class="vttext">VT Office of New Student Programs</h1>
+</header>
+    <form action="{% url 'inventorydata:item' %}" method="post" class="pure-form pure-form-stacked center">
+        {% csrf_token %}
+        {{ form }}
+        <br><br>
+        <input type="submit" value="Submit" />
+    </form>
+
+<footer></footer>
